@@ -1,0 +1,56 @@
+:root {
+    --grid-cols: 1;
+    --grid-rows: 1;
+    --content-width: 550px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(18, 18, 18);
+}
+#header {
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgb(62, 166, 255);
+}
+
+.button {
+    flex: auto;
+    border: 1px solid rgb(62, 166, 255);
+    border-radius: 5px;
+    color: rgb(62, 166, 255);
+    background-color: rgb(30, 30, 30);
+    padding: 0.7rem;
+    font-size: 1rem;
+    margin: 0.2rem;
+}
+
+.color-selection-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 75vw;
+    max-width: var(--content-width);  
+}
+
+#grid-container {
+    height: 75vw;
+    width: 75vw;
+    max-height: var(--content-width);
+    max-width: var(--content-width);
+    margin: 1.875rem auto;
+}
+
+#grid-cells {
+    display: grid;
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-cols), 1fr);
+    background-color: whitesmoke;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-item {
+    border: 1px groove
+}
