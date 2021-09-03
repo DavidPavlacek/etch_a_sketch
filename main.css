@@ -1,13 +1,14 @@
 :root {
     --grid-cols: 1;
     --grid-rows: 1;
-    --content-width: 550px;
+    --content-width: 500px;
 }
 
 body {
     margin: 0;
     padding: 0;
     background-color: rgb(18, 18, 18);
+    
 }
 #header {
     text-align: center;
@@ -39,7 +40,7 @@ body {
     width: 75vw;
     max-height: var(--content-width);
     max-width: var(--content-width);
-    margin: 1.875rem auto;
+    margin: 1.5rem auto;
 }
 
 #grid-cells {
@@ -53,4 +54,36 @@ body {
 
 .grid-item {
     border: 1px groove
+}
+
+#grid-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-width: var(--content-width);
+    margin: 0 auto;
+    line-height: 0.1px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#size-cointaner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 75vw;
+    max-width: var(--content-width);
+}
+
+#current-size {
+    color: whitesmoke;
+    margin: 0.5rem;
+    width: 100%;
+}
+
+#slider {
+    width: 100%;
+    max-width: var(--content-width);
 }
