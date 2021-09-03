@@ -77,9 +77,9 @@ body {
     max-width: var(--content-width);
 }
 
-#current-size {
+#grid-size {
     color: whitesmoke;
-    margin: 0.5rem;
+    margin: 1rem;
     width: 100%;
 }
 
