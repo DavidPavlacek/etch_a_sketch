@@ -53,7 +53,7 @@ body {
 }
 
 .grid-item {
-    border: 1px groove
+    border: 1px groove;
 }
 
 #grid-options {
@@ -87,3 +87,8 @@ body {
     width: 100%;
     max-width: var(--content-width);
 }
+
+.black-pen {
+    background-color: black;
+}
+
