@@ -3,15 +3,13 @@ const slider = document.getElementById("slider");
 const gridSize = document.getElementById("grid-size");
 const clearBtn = document.getElementById("clear-btn");
 const blackBtn = document.getElementById("black-btn");
-
+let gridItemList = document.getElementsByClassName('grid-item');
 let blackBtnIsActive = false;
 
 makeGrid(16,16)
 makeNewGrid();
 
-const gridItemList = document.querySelectorAll(".grid-item");
-
-function makeGrid(rows, cols) {
+function makeGrid(rows, cols) {   
     gridCells.style.setProperty('--grid-rows', rows);
     gridCells.style.setProperty('--grid-cols', cols);
     for ( c = 0; c < ( rows * cols); c++) {
@@ -27,6 +25,7 @@ function removeAllCells() {
 }
 
 function makeNewGrid() {
+    
     slider.addEventListener("input", function() {
         let val = this.value;
         gridSize.textContent = "Size: " + val + " x " + val
@@ -34,13 +33,14 @@ function makeNewGrid() {
     slider.addEventListener("mouseup", function() { 
         let val = this.value;   
         removeAllCells();
+        blackBtnIsActive = false;
         return makeGrid(val, val);
     })
     slider.addEventListener("touchend", function() { 
         let val = this.value;   
         removeAllCells();
         return makeGrid(val, val);
-    })
+    })  
 }
 
 function pickColor() {
@@ -52,10 +52,10 @@ function pickColor() {
 function blackBtnClick() {
     if (blackBtnIsActive == false) {
         blackBtnIsActive = true;
-        gridItemList.forEach(cell => cell.addEventListener("mouseover", pickColor));
+        Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));
     } else blackBtnIsActive = false
-    console.log(blackBtnIsActive);
 }
+
 
 blackBtn.addEventListener("click", blackBtnClick)
 
