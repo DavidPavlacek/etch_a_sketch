@@ -27,7 +27,7 @@ body {
     margin: 0.2rem;
 }
 
-.color-selection-buttons {
+#color-selection-buttons {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
@@ -92,3 +92,6 @@ body {
     background-color: black;
 }
 
+.clear {
+    background-color: whitesmoke;
+}
