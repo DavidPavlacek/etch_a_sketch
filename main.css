@@ -1,7 +1,7 @@
 :root {
     --grid-cols: 1;
     --grid-rows: 1;
-    --content-width: 500px;
+    --content-width: 600px;
 }
 
 body {
@@ -92,6 +92,22 @@ body {
     background-color: black;
 }
 
-.clear {
-    background-color: whitesmoke;
+#color-pick {
+    padding: 1px;
+    background-color: rgb(62, 166, 255); 
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    height: 0.7rem;
+    width: 1.2rem;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
 }

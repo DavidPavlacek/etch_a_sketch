@@ -2,24 +2,31 @@ const gridCells = document.getElementById("grid-cells");
 const slider = document.getElementById("slider");
 const gridSize = document.getElementById("grid-size");
 const allButtons = document.getElementById("color-selection-buttons");
+const colorPick = document.getElementById("color-pick");
 let gridItemList = document.getElementsByClassName('grid-item');
+
 
 let blackBtnIsActive = false;
 let rainbowBtnIsActive = false;
 let scaleBtnIsActive = false;
 let pickBtnIsActive = false;
 
+let blackColorValue = "#000000";
+let pickColorValue = "#0826af";
+colorPick.addEventListener("input", function() {
+    return pickColorValue = this.value
+})
+
 function makeGrid(rows, cols) {   
     gridCells.style.setProperty('--grid-rows', rows);
     gridCells.style.setProperty('--grid-cols', cols);
-    for ( c = 0; c < ( rows * cols); c++) {
+    for ( i = 0; i < ( rows * cols); i++) {
         let cell = document.createElement("div");
         gridCells.appendChild(cell).className = "grid-item";
     }
 }
 
-function makeNewGrid() {
-    
+function makeNewGrid() { 
     slider.addEventListener("input", function() {
         let val = this.value;
         gridSize.textContent = "Size: " + val + " x " + val
@@ -37,24 +44,53 @@ function makeNewGrid() {
     })  
 }
 
-allButtons.addEventListener("click", function(e) {
-
-    if (e.target && e.target.id == "black-btn") {
+allButtons.addEventListener("click", function(e) { 
+    if (e.target.id == "black-btn") {
         blackBtnClick();
     }
-    if (e.target && e.target.id == "rainbow-btn") {
+    if (e.target.id == "rainbow-btn") {
         console.log(e.target.id + " was clicked");
     }
-    if (e.target && e.target.id == "scale-btn") {
+    if (e.target.id == "scale-btn") {
         console.log(e.target.id + " was clicked");
     }
-    if (e.target && e.target.id == "pick-btn") {
-        console.log(e.target.id + " was clicked");
+    if (e.target.id == "pick-btn" ||
+        e.target.id == "color-pick") {
+        pickBtnClick()  
     }
-    if (e.target && e.target.id == "clear-btn") {
+    if (e.target.id == "clear-btn") {
         clearBtnClick();
     }
-})
+});
+
+function listenMouseOverCells() {
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));
+}
+
+function blackBtnClick() {
+    if (blackBtnIsActive == false) {
+        disableAllButtons();
+        blackBtnIsActive = true;
+        listenMouseOverCells();
+    } else disableAllButtons();
+}
+
+function pickBtnClick() {
+    if (pickBtnIsActive == false) {    
+        disableAllButtons();
+        pickBtnIsActive = true;
+        listenMouseOverCells();
+    } else disableAllButtons();
+}
+
+function pickColor() {
+    if (blackBtnIsActive == true) {
+        this.style.backgroundColor = blackColorValue;
+    }
+    else if (pickBtnIsActive == true) {
+            this.style.backgroundColor = pickColorValue;
+    }
+}
 
 function removeAllCells() {
     while (gridCells.firstChild) {
@@ -63,10 +99,13 @@ function removeAllCells() {
 }
 
 function disableAllButtons() {
-    blackBtnIsActive = false;
-    rainbowBtnIsActive = false;
-    scaleBtnIsActive = false;
-    pickBtnIsActive = false;
+    if (blackBtnIsActive == true) {
+        blackBtnIsActive = false;
+    }else if (rainbowBtnIsActive == true) {
+                rainbowBtnIsActive = false;
+    }else if (scaleBtnIsActive == true) {
+                scaleBtnIsActive = false;
+    }else pickBtnIsActive = false;
 }
 
 function clearBtnClick() {
@@ -75,18 +114,11 @@ function clearBtnClick() {
     makeGrid(slider.value, slider.value)
 }
 
-function pickColor() {
-    if (blackBtnIsActive == true) {
-        this.classList.add("black-pen")
-    }
-}
-
-function blackBtnClick() {
-    if (blackBtnIsActive == false) {
-        blackBtnIsActive = true;
-        Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));
-    } else blackBtnIsActive = false
-}
-
 makeGrid(16,16);
 makeNewGrid();
+
+
+
+
+
+
