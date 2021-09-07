@@ -3,23 +3,16 @@ const slider = document.getElementById("slider");
 const gridSize = document.getElementById("grid-size");
 const allButtons = document.getElementById("color-selection-buttons");
 const colorPick = document.getElementById("color-pick");
-let gridItemList = document.getElementsByClassName('grid-item');
-
+let gridItemList = document.getElementsByClassName("grid-item");
 
 let blackBtnIsActive = false;
 let rainbowBtnIsActive = false;
 let scaleBtnIsActive = false;
 let pickBtnIsActive = false;
 let ereaseBtnIsActive = false;
-
-
 let blackColorValue = "#000000";
 let pickColorValue = "#0826af";
 let ereaserColorValue = "whitesmoke"
-let rainbowColorValue = getRandomColor();
-colorPick.addEventListener("input", function() {
-    return pickColorValue = this.value
-})
 
 function makeGrid(rows, cols) {   
     gridCells.style.setProperty('--grid-rows', rows);
@@ -53,7 +46,7 @@ allButtons.addEventListener("click", function(e) {
         blackBtnClick();
     }
     if (e.target.id == "rainbow-btn") {
-        rainbowBtnClick();
+        rainbowBtnClick();      
     }
     if (e.target.id == "scale-btn") {
         console.log(e.target.id + " was clicked");
@@ -63,7 +56,6 @@ allButtons.addEventListener("click", function(e) {
         pickBtnClick();
     }
     if (e.target.id == "erease-btn") {
-        console.log(e.target.id + " was clicked");
         ereaseBtnClick();
     }
     if (e.target.id == "clear-btn") {
@@ -79,6 +71,14 @@ function blackBtnClick() {
     if (blackBtnIsActive == false) {
         disableAllButtons();
         blackBtnIsActive = true;
+        listenMouseOverCells();
+    } else disableAllButtons();
+}
+
+function rainbowBtnClick() {
+    if (rainbowBtnIsActive == false) {     
+        disableAllButtons();
+        rainbowBtnIsActive = true;
         listenMouseOverCells();
     } else disableAllButtons();
 }
@@ -99,17 +99,35 @@ function ereaseBtnClick() {
     } else disableAllButtons();
 }
 
+function clearBtnClick() {
+    disableAllButtons();
+    removeAllCells();
+    makeGrid(slider.value, slider.value)
+}
+
 function pickColor() {
     if (blackBtnIsActive == true) {
         this.style.backgroundColor = blackColorValue;
     } else if (pickBtnIsActive == true) {
             this.style.backgroundColor = pickColorValue;
     } else if (rainbowBtnIsActive == true) {
-            this.style.backgroundColor = rainbowColorValue;
+                this.style.backgroundColor = getRandomColor();
     } else if (ereaseBtnIsActive == true) {
-        this.style.backgroundColor = ereaserColorValue;
-    }
+                this.style.backgroundColor = ereaserColorValue;
+    }  
 }
+
+function getRandomColor() {
+    let letters = "0123456789ABCDEF";
+    let randomColor = "#";
+    for ( let i = 0; i < 6; i++) {
+        randomColor += letters[Math.floor(Math.random() * 16)];      
+    } return randomColor;  
+}
+
+colorPick.addEventListener("input", function() {
+    return pickColorValue = this.value
+})
 
 function removeAllCells() {
     while (gridCells.firstChild) {
@@ -118,7 +136,6 @@ function removeAllCells() {
 }
 
 function disableAllButtons() {
-
     if (blackBtnIsActive == true) {
         blackBtnIsActive = false;
     }else if (rainbowBtnIsActive == true) {
@@ -130,36 +147,7 @@ function disableAllButtons() {
     }else ereaseBtnIsActive = false;
 }
 
-function clearBtnClick() {
-    disableAllButtons();
-    removeAllCells();
-    makeGrid(slider.value, slider.value)
-}
 
 makeGrid(16,16);
 makeNewGrid();
-
-
-///////////////
-
-
-function getRandomColor() {
-    let letters = "0123456789ABCDEF";
-    let color = "#";
-    for ( let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    } return color;
-}
-
-
-function rainbowBtnClick() {
-    if (rainbowBtnIsActive == false) {     
-        disableAllButtons();
-        rainbowBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
-
-//////////
-
 
