@@ -12,6 +12,7 @@ let scaleBtnIsActive = false;
 let pickBtnIsActive = false;
 let ereaseBtnIsActive = false;
 
+
 let blackColorValue = "#000000";
 let pickColorValue = "#0826af";
 let ereaserColorValue = "whitesmoke"
@@ -117,6 +118,7 @@ function removeAllCells() {
 }
 
 function disableAllButtons() {
+
     if (blackBtnIsActive == true) {
         blackBtnIsActive = false;
     }else if (rainbowBtnIsActive == true) {
