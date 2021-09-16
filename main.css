@@ -2,6 +2,7 @@
     --grid-cols: 1;
     --grid-rows: 1;
     --content-width: 600px;
+    --black-color: (0, 0, 0,)
 }
 
 body {
@@ -53,7 +54,7 @@ body {
 }
 
 .grid-item {
-    border: 1px groove;
+    border: 1px groove; 
 }
 
 #grid-options {

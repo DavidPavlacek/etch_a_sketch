@@ -49,12 +49,14 @@ allButtons.addEventListener("click", function(e) {
         rainbowBtnClick();      
     }
     if (e.target.id == "scale-btn") {
+        scaleBtnClick();
         console.log(e.target.id + " was clicked");
     }
     if (e.target.id == "pick-btn" ||
         e.target.id == "color-pick") {
         pickBtnClick();
     }
+
     if (e.target.id == "erease-btn") {
         ereaseBtnClick();
     }
@@ -114,7 +116,11 @@ function pickColor() {
                 this.style.backgroundColor = getRandomColor();
     } else if (ereaseBtnIsActive == true) {
                 this.style.backgroundColor = ereaserColorValue;
-    }  
+    } else if (scaleBtnIsActive == true) {
+                this.style.backgroundColor = "black";
+                this.style.opacity = (parseFloat(this.style.opacity) || 0) + 0.2;
+                
+    }
 }
 
 function getRandomColor() {
@@ -138,16 +144,25 @@ function removeAllCells() {
 function disableAllButtons() {
     if (blackBtnIsActive == true) {
         blackBtnIsActive = false;
-    }else if (rainbowBtnIsActive == true) {
+    } else if (rainbowBtnIsActive == true) {
                 rainbowBtnIsActive = false;
-    }else if (scaleBtnIsActive == true) {
+    } else if (scaleBtnIsActive == true) {
                 scaleBtnIsActive = false;
-    }else if (pickBtnIsActive == true) {
+    } else if (pickBtnIsActive == true) {
                 pickBtnIsActive = false;
-    }else ereaseBtnIsActive = false;
+    } else ereaseBtnIsActive = false;
 }
 
 
 makeGrid(16,16);
 makeNewGrid();
 
+
+
+function scaleBtnClick() {
+    if (scaleBtnIsActive == false) {
+        disableAllButtons();
+        scaleBtnIsActive = true;
+        listenMouseOverCells();
+    } else disableAllButtons();
+}
