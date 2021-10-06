@@ -10,9 +10,10 @@ let rainbowBtnIsActive = false;
 let scaleBtnIsActive = false;
 let pickBtnIsActive = false;
 let ereaseBtnIsActive = false;
-let blackColorValue = "#000000";
 let pickColorValue = "#0826af";
-let ereaserColorValue = "whitesmoke"
+let ereaserColorValue = "whitesmoke";
+let coloringFunction = blackPen;
+
 
 function makeGrid(rows, cols) {   
     gridCells.style.setProperty('--grid-rows', rows);
@@ -41,65 +42,57 @@ function makeNewGrid() {
     })  
 }
 
+function listenMouseOverCells() {
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", coloringFunction));
+}
+
 allButtons.addEventListener("click", function(e) { 
     if (e.target.id == "black-btn") {
-        blackBtnClick();
+        coloringFunction = blackPen;
+        if (blackBtnIsActive == false) {
+            disableAllButtons();
+            blackBtnIsActive = true;
+            listenMouseOverCells();
+        } else disableAllButtons();     
     }
     if (e.target.id == "rainbow-btn") {
-        rainbowBtnClick();      
+        coloringFunction = rainbowPen;
+        if (rainbowBtnIsActive == false) {     
+            disableAllButtons();
+            rainbowBtnIsActive = true;
+            listenMouseOverCells();
+        } else disableAllButtons();    
     }
     if (e.target.id == "scale-btn") {
-        scaleBtnClick();
-        console.log(e.target.id + " was clicked");
+        coloringFunction = greyScalePen;
+        if (scaleBtnIsActive == false) {
+            disableAllButtons();
+            scaleBtnIsActive = true;
+            listenMouseOverCells();
+        } else disableAllButtons();
     }
     if (e.target.id == "pick-btn" ||
         e.target.id == "color-pick") {
-        pickBtnClick();
+        coloringFunction = pickColorPen;
+        if (pickBtnIsActive == false) {    
+            disableAllButtons();
+            pickBtnIsActive = true;
+            listenMouseOverCells();
+        }else disableAllButtons();
     }
 
     if (e.target.id == "erease-btn") {
-        ereaseBtnClick();
+        coloringFunction = ereasePen;
+        if (ereaseBtnIsActive == false) {    
+            disableAllButtons();
+            ereaseBtnIsActive = true;
+            listenMouseOverCells();
+        } else disableAllButtons();
     }
     if (e.target.id == "clear-btn") {
         clearBtnClick();
     }
 });
-
-function listenMouseOverCells() {
-    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));
-}
-
-function blackBtnClick() {
-    if (blackBtnIsActive == false) {
-        disableAllButtons();
-        blackBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
-
-function rainbowBtnClick() {
-    if (rainbowBtnIsActive == false) {     
-        disableAllButtons();
-        rainbowBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
-
-function pickBtnClick() {
-    if (pickBtnIsActive == false) {    
-        disableAllButtons();
-        pickBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
-
-function ereaseBtnClick() {
-    if (ereaseBtnIsActive == false) {    
-        disableAllButtons();
-        ereaseBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
 
 function clearBtnClick() {
     disableAllButtons();
@@ -107,20 +100,42 @@ function clearBtnClick() {
     makeGrid(slider.value, slider.value)
 }
 
-function pickColor() {
+function blackPen(event) {
     if (blackBtnIsActive == true) {
-        this.style.backgroundColor = blackColorValue;
-    } else if (pickBtnIsActive == true) {
-            this.style.backgroundColor = pickColorValue;
-    } else if (rainbowBtnIsActive == true) {
-                this.style.backgroundColor = getRandomColor();
-    } else if (ereaseBtnIsActive == true) {
-                this.style.backgroundColor = ereaserColorValue;
-    } else if (scaleBtnIsActive == true) {
-                this.style.backgroundColor = "black";
-                this.style.opacity = (parseFloat(this.style.opacity) || 0) + 0.2;
-                
-    }
+        event.target.style.backgroundColor = "black";
+        event.target.style.opacity = "1";
+    } else event.stopPropagation()
+}
+
+function rainbowPen(event) {
+    if (rainbowBtnIsActive == true) {
+        event.target.style.backgroundColor = getRandomColor();
+        event.target.style.opacity = "1";
+    } else event.stopPropagation()
+}
+
+function greyScalePen(event) {
+    if (scaleBtnIsActive == true) {  
+        if (event.target.style.backgroundColor != "black") {
+            event.target.style.opacity = 0;
+        }
+        event.target.style.backgroundColor = "black";
+        event.target.style.opacity = (parseFloat(event.target.style.opacity) || 0) + 0.2;    
+    } else event.stopPropagation()
+}
+
+function pickColorPen(event) {
+    if (pickBtnIsActive == true) {
+        event.target.style.backgroundColor = pickColorValue;;
+        event.target.style.opacity = "1";
+    } else event.stopPropagation()
+}
+
+function ereasePen(event) {
+    if (ereaseBtnIsActive == true) {
+        event.target.style.backgroundColor = ereaserColorValue;
+        event.target.style.opacity = "1";
+    } else event.stopPropagation()
 }
 
 function getRandomColor() {
@@ -153,16 +168,7 @@ function disableAllButtons() {
     } else ereaseBtnIsActive = false;
 }
 
-
 makeGrid(16,16);
 makeNewGrid();
 
 
-
-function scaleBtnClick() {
-    if (scaleBtnIsActive == false) {
-        disableAllButtons();
-        scaleBtnIsActive = true;
-        listenMouseOverCells();
-    } else disableAllButtons();
-}
