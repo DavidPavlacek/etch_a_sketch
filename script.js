@@ -12,7 +12,9 @@ let pickBtnIsActive = false;
 let ereaseBtnIsActive = false;
 let pickColorValue = "#0826af";
 let ereaserColorValue = "whitesmoke";
-let coloringFunction = blackPen;
+let pickColor = blackPen;
+
+let isDrawing = false;
 
 
 function makeGrid(rows, cols) {   
@@ -42,51 +44,56 @@ function makeNewGrid() {
     })  
 }
 
-function listenMouseOverCells() {
-    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", coloringFunction));
+function drawOnMouseDown() {
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("mousedown", () => {
+        Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));            
+    }))
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseup", () => {
+        Array.from(gridItemList).forEach(cell => cell.removeEventListener("mouseover", pickColor));
+    }))
 }
 
 allButtons.addEventListener("click", function(e) { 
     if (e.target.id == "black-btn") {
-        coloringFunction = blackPen;
+        pickColor = blackPen;
         if (blackBtnIsActive == false) {
             disableAllButtons();
-            blackBtnIsActive = true;
-            listenMouseOverCells();
+            blackBtnIsActive = true;   
+            drawOnMouseDown();
         } else disableAllButtons();     
     }
     if (e.target.id == "rainbow-btn") {
-        coloringFunction = rainbowPen;
+        pickColor = rainbowPen;
         if (rainbowBtnIsActive == false) {     
             disableAllButtons();
             rainbowBtnIsActive = true;
-            listenMouseOverCells();
+            drawOnMouseDown();
         } else disableAllButtons();    
     }
     if (e.target.id == "scale-btn") {
-        coloringFunction = greyScalePen;
+        pickColor = greyScalePen;
         if (scaleBtnIsActive == false) {
             disableAllButtons();
             scaleBtnIsActive = true;
-            listenMouseOverCells();
+            drawOnMouseDown();
         } else disableAllButtons();
     }
     if (e.target.id == "pick-btn" ||
         e.target.id == "color-pick") {
-        coloringFunction = pickColorPen;
+        pickColor = pickColorPen;
         if (pickBtnIsActive == false) {    
             disableAllButtons();
             pickBtnIsActive = true;
-            listenMouseOverCells();
+            drawOnMouseDown();
         }else disableAllButtons();
     }
 
     if (e.target.id == "erease-btn") {
-        coloringFunction = ereasePen;
+        pickColor = ereasePen;
         if (ereaseBtnIsActive == false) {    
             disableAllButtons();
             ereaseBtnIsActive = true;
-            listenMouseOverCells();
+            drawOnMouseDown();
         } else disableAllButtons();
     }
     if (e.target.id == "clear-btn") {
@@ -170,5 +177,7 @@ function disableAllButtons() {
 
 makeGrid(16,16);
 makeNewGrid();
+
+///
 
 
