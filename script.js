@@ -13,7 +13,6 @@ let ereaseBtnIsActive = false;
 let pickColorValue = "#0826af";
 let ereaserColorValue = "whitesmoke";
 let pickColor = blackPen;
-
 let isDrawing = false;
 
 
@@ -44,13 +43,27 @@ function makeNewGrid() {
     })  
 }
 
-function drawOnMouseDown() {
-    Array.from(gridItemList).forEach(cell => cell.addEventListener("mousedown", () => {
-        Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));            
-    }))
-    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseup", () => {
-        Array.from(gridItemList).forEach(cell => cell.removeEventListener("mouseover", pickColor));
-    }))
+function startDrawing() {
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("mouseover", pickColor));
+}
+
+function stopDrawing() {
+    Array.from(gridItemList).forEach(cell => cell.removeEventListener("mouseover", pickColor));
+}
+
+function drawOnAndOff() {
+    console.log(isDrawing);
+    if (isDrawing == false) {
+        isDrawing = true
+        startDrawing();
+    }else if (isDrawing == true) {
+        isDrawing = false
+        stopDrawing();
+    }else console.log("bug");
+}
+
+function drawOnMouseClick() {
+    Array.from(gridItemList).forEach(cell => cell.addEventListener("click", drawOnAndOff))
 }
 
 allButtons.addEventListener("click", function(e) { 
@@ -58,8 +71,8 @@ allButtons.addEventListener("click", function(e) {
         pickColor = blackPen;
         if (blackBtnIsActive == false) {
             disableAllButtons();
-            blackBtnIsActive = true;   
-            drawOnMouseDown();
+            blackBtnIsActive = true; 
+            drawOnMouseClick();
         } else disableAllButtons();     
     }
     if (e.target.id == "rainbow-btn") {
@@ -67,7 +80,7 @@ allButtons.addEventListener("click", function(e) {
         if (rainbowBtnIsActive == false) {     
             disableAllButtons();
             rainbowBtnIsActive = true;
-            drawOnMouseDown();
+            drawOnMouseClick();
         } else disableAllButtons();    
     }
     if (e.target.id == "scale-btn") {
@@ -75,7 +88,7 @@ allButtons.addEventListener("click", function(e) {
         if (scaleBtnIsActive == false) {
             disableAllButtons();
             scaleBtnIsActive = true;
-            drawOnMouseDown();
+            drawOnMouseClick();
         } else disableAllButtons();
     }
     if (e.target.id == "pick-btn" ||
@@ -84,7 +97,7 @@ allButtons.addEventListener("click", function(e) {
         if (pickBtnIsActive == false) {    
             disableAllButtons();
             pickBtnIsActive = true;
-            drawOnMouseDown();
+            drawOnMouseClick();
         }else disableAllButtons();
     }
 
@@ -93,7 +106,7 @@ allButtons.addEventListener("click", function(e) {
         if (ereaseBtnIsActive == false) {    
             disableAllButtons();
             ereaseBtnIsActive = true;
-            drawOnMouseDown();
+            drawOnMouseClick();
         } else disableAllButtons();
     }
     if (e.target.id == "clear-btn") {
@@ -177,7 +190,4 @@ function disableAllButtons() {
 
 makeGrid(16,16);
 makeNewGrid();
-
-///
-
 
