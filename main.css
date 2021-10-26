@@ -27,12 +27,29 @@ body {
     margin: 0.2rem;
 }
 
+#black-btn:hover,
+#rainbow-btn:hover,
+#scale-btn:hover,
+#pick-btn:hover,
+#erease-btn:hover,
+#clear-btn:hover {
+    box-shadow: 0px 1px 10px 0px rgb(62, 166, 255);
+    transform: scale(1.1);
+}
+
 #color-selection-buttons {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 75vw;
     max-width: var(--content-width);  
+}
+
+.btn-clicked {
+    box-shadow: 0px 1px 5px 0px rgb(62, 166, 255);
+    transform: scale(1.1);
+    transition: 0.5s;
+    font-size: 1.2rem;
 }
 
 #grid-container {

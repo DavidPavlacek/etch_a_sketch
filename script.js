@@ -4,6 +4,7 @@ const gridSize = document.getElementById("grid-size");
 const allButtons = document.getElementById("color-selection-buttons");
 const colorPick = document.getElementById("color-pick");
 let gridItemList = document.getElementsByClassName("grid-item");
+let button = document.querySelectorAll(".button")
 
 let blackBtnIsActive = false;
 let rainbowBtnIsActive = false;
@@ -14,7 +15,6 @@ let pickColorValue = "#0826af";
 let ereaserColorValue = "whitesmoke";
 let pickColor = blackPen;
 let isDrawing = false;
-
 
 function makeGrid(rows, cols) {   
     gridCells.style.setProperty('--grid-rows', rows);
@@ -52,7 +52,6 @@ function stopDrawing() {
 }
 
 function drawOnAndOff() {
-    console.log(isDrawing);
     if (isDrawing == false) {
         isDrawing = true
         startDrawing();
@@ -67,11 +66,16 @@ function drawOnMouseClick() {
 }
 
 allButtons.addEventListener("click", function(e) { 
+    removeButtonsHighlight();
+    stopDrawing();
     if (e.target.id == "black-btn") {
         pickColor = blackPen;
         if (blackBtnIsActive == false) {
             disableAllButtons();
             blackBtnIsActive = true; 
+            if (blackBtnIsActive == true) {
+                e.target.classList.add("btn-clicked")
+            }
             drawOnMouseClick();
         } else disableAllButtons();     
     }
@@ -80,6 +84,9 @@ allButtons.addEventListener("click", function(e) {
         if (rainbowBtnIsActive == false) {     
             disableAllButtons();
             rainbowBtnIsActive = true;
+            if (rainbowBtnIsActive == true) {
+                e.target.classList.add("btn-clicked")
+            }
             drawOnMouseClick();
         } else disableAllButtons();    
     }
@@ -88,6 +95,9 @@ allButtons.addEventListener("click", function(e) {
         if (scaleBtnIsActive == false) {
             disableAllButtons();
             scaleBtnIsActive = true;
+            if (scaleBtnIsActive == true) {
+                e.target.classList.add("btn-clicked")
+            }
             drawOnMouseClick();
         } else disableAllButtons();
     }
@@ -97,15 +107,20 @@ allButtons.addEventListener("click", function(e) {
         if (pickBtnIsActive == false) {    
             disableAllButtons();
             pickBtnIsActive = true;
+            if (pickBtnIsActive == true) {
+                e.target.classList.add("btn-clicked")
+            }
             drawOnMouseClick();
         }else disableAllButtons();
     }
-
     if (e.target.id == "erease-btn") {
         pickColor = ereasePen;
         if (ereaseBtnIsActive == false) {    
             disableAllButtons();
             ereaseBtnIsActive = true;
+            if (ereaseBtnIsActive == true) {
+                e.target.classList.add("btn-clicked")
+            }
             drawOnMouseClick();
         } else disableAllButtons();
     }
@@ -186,6 +201,12 @@ function disableAllButtons() {
     } else if (pickBtnIsActive == true) {
                 pickBtnIsActive = false;
     } else ereaseBtnIsActive = false;
+}
+
+function removeButtonsHighlight() {
+    for (let i = 0; i < button.length; i++) {
+            button[i].classList.remove("btn-clicked") 
+    }
 }
 
 makeGrid(16,16);
